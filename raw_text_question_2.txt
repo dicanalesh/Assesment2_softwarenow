@@ -1,0 +1,84 @@
+import string
+
+def shift_char(c, shift, direction="forward"):
+    """Helper to shift a single character within a-z or A-Z with wraparound."""
+    if c.islower():
+        alphabet = string.ascii_lowercase
+    else:
+        alphabet = string.ascii_uppercase
+
+    idx = alphabet.index(c)
+    if direction == "forward":
+        new_idx = (idx + shift) % 26
+    else:  # backward
+        new_idx = (idx - shift) % 26
+
+    return alphabet[new_idx]
+
+def encrypt(text, shift1, shift2):
+    encrypted = ""
+    for c in text:
+        if c.islower():
+            if c <= 'm':  # first half
+                encrypted += shift_char(c, shift1 * shift2, "forward")
+            else:  # n-z
+                encrypted += shift_char(c, shift1 + shift2, "backward")
+        elif c.isupper():
+            if c <= 'M':  # first half
+                encrypted += shift_char(c, shift1, "backward")
+            else:  # N-Z
+                encrypted += shift_char(c, shift2 ** 2, "forward")
+        else:
+            encrypted += c  # leave unchanged
+    return encrypted
+
+def decrypt(text, shift1, shift2):
+    decrypted = ""
+    for c in text:
+        if c.islower():
+            if c <= 'm':  # first half
+                decrypted += shift_char(c, shift1 * shift2, "backward")
+            else:  # n-z
+                decrypted += shift_char(c, shift1 + shift2, "forward")
+        elif c.isupper():
+            if c <= 'M':  # first half
+                decrypted += shift_char(c, shift1, "forward")
+            else:  # N-Z
+                decrypted += shift_char(c, shift2 ** 2, "backward")
+        else:
+            decrypted += c
+    return decrypted
+
+def verify(original_file, decrypted_file):
+    with open(original_file, "r", encoding="utf-8") as f1, open(decrypted_file, "r", encoding="utf-8") as f2:
+        original = f1.read()
+        decrypted = f2.read()
+        if original == decrypted:
+            print("✅ Decryption successful! The files match.")
+        else:
+            print("❌ Decryption failed. The files do not match.")
+
+def main():
+    # Prompt user
+    shift1 = int(input("Enter shift1: "))
+    shift2 = int(input("Enter shift2: "))
+
+    # Read raw text
+    with open("raw_text.txt", "r", encoding="utf-8") as f:
+        raw_content = f.read()
+
+    # Encrypt
+    encrypted_content = encrypt(raw_content, shift1, shift2)
+    with open("encrypted_text.txt", "w", encoding="utf-8") as f:
+        f.write(encrypted_content)
+
+    # Decrypt
+    decrypted_content = decrypt(encrypted_content, shift1, shift2)
+    with open("decrypted_text.txt", "w", encoding="utf-8") as f:
+        f.write(decrypted_content)
+
+    # Verify
+    verify("raw_text.txt", "decrypted_text.txt")
+
+if __name__ == "__main__":
+    main()
