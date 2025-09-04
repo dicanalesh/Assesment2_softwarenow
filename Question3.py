@@ -1,7 +1,18 @@
+# Q3: Fractal Polygon Drawer
+# This program draws a fractal polygon based on user inputs for number of sides, side length
+
 import turtle
 import math
 
-#Function to draw a fractal side (Koch-like)
+# Inputs
+# Ask details from user. We need 3 data: number of sides, side length, and depth.
+sides = int(input("Enter the number of sides: "))
+length = int(input("Enter the side length: "))
+depth = int(input("Enter the recursion depth: "))
+
+
+#Function to draw one side of the fractal polygon
+
 # We have to use recursion function similar to factorial function.
 # To make a recursive function, we need a base case and a recursive case.
 # Base case: when depth is 0, just draw a straight line.
@@ -28,7 +39,8 @@ def fractal_side(pen, length, depth):
 # 120 degrees is the external angle (180 - 60).
 # When depth is 0, it draws a straight line.
 
-# Función para dibujar un polígono fractal
+# Function to draw the complete fractal polygon
+
 # We have to draw a isogonal polygon with the numer of sides given by de the user.
 
 def draw_fractal_polygon(pen, sides, length, depth): #We use the object pen from turtle module to draw
@@ -38,16 +50,7 @@ def draw_fractal_polygon(pen, sides, length, depth): #We use the object pen from
         pen.right(angle)
 # When the pen finish one side will start drwaing the next side inmideately.
 # The pen will draw with the fractal_side how many sides the user input.
-#When the pen finish one side will turn right the next external angle of the polygon to start drawing the next side.
-
-# -------------------------
-# Main program
-# -------------------------
-# Inputs
-# Ask details from user. We need 3 data: number of sides, side length, and depth.
-sides = int(input("Enter the number of sides: "))
-length = int(input("Enter the side length: "))
-depth = int(input("Enter the recursion depth: "))
+# When the pen finish one side will turn right the next external angle of the polygon to start drawing the next side.
 
 # Setup turtle screen
 screen = turtle.Screen()
@@ -62,18 +65,14 @@ pen.pensize(2)
 pen.speed(0) # Set drawing speed to maximum
 pen.hideturtle() # Hide the turtle cursor. It looks cleaner.
 
-# Calcular tamaño máximo para centrar
-# Ajuste automático según número de lados y profundidad
-total_length = length * (4/3) ** depth  # Aproximación del crecimiento del fractal
-radius = total_length / (2 * math.sin(math.pi / sides))
-
-# Centrar tortuga
-pen.penup()
-pen.goto(-radius, radius / 2)  # Ajuste vertical
+# Adjust starting point of the pen to center the drawing.
+# If we dont do this, the drawing will start from the center of the screen and go to the right and down.
+pen.penup() # Lift the pen to move without drawing
+pen.goto(-length / 2, length / 2) # Move to a better starting position. We use length/2 to center the drawing better.
 pen.pendown()
 
-# Dibujar fractal
+# Draw fractal
 draw_fractal_polygon(pen, sides, length, depth)
 
-turtle.update()      # Mostrar todo de golpe
-turtle.exitonclick() # Cierra al hacer clic
+turtle.update()      # Update the screen with the drawn content
+turtle.exitonclick() # Close the window when clicked because it is the easiest way to close the window.
