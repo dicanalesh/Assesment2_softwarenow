@@ -93,9 +93,9 @@ def verify_files(path1, path2):
     with open(path1, "r", encoding="utf-8") as f1, open(path2, "r", encoding="utf-8") as f2:
         a, b = f1.read(), f2.read()
     if a == b:
-        print("✅ Decryption successful! The files match.")
+        print("Decryption successful! The files match.")
     else:
-        print("❌ Decryption failed. The files do not match.")
+        print("Decryption failed. The files do not match.")
 
 def main():
     shift1 = int(input("Enter shift1: "))
@@ -115,7 +115,7 @@ def main():
     with open("decrypted_text.txt", "w", encoding="utf-8") as f:
         f.write(decrypted)
 
-    # 4) Verify round-trip
+    # 4) Verify that raw_text.txt and decrypted_text.txt are the same
     verify_files("raw_text.txt", "decrypted_text.txt")
 
 if __name__ == "__main__":

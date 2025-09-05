@@ -41,7 +41,12 @@ To run the code in this repository, you will need to have Python and Jupyter Not
 
 ## Author
 
-*   **Your Name:** Diego Canales
-*   **Your Student ID:** S395246
-
+*   **Name:** Diego Canales
+*   **Student ID:** S395246
+*   **Name:** Reuben Alexander Thomas
+*   **Student ID:** S389882
+*   **Name:** Hayden Raveen 
+*   **Student ID:** S391032
+*   **Name:** Jennifer Ju
+*   **Student ID:** S365604
 
